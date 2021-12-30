@@ -25,7 +25,7 @@ module.exports = {
         const usersWalletAddress = key.getPublic('hex');
         const privateKey = key.getPrivate('hex');
 
-        const tx = new Transaction('system', usersWalletAddress, 150);
+        const tx = new Transaction('system', usersWalletAddress, 1500);
 
         try {
             myChain.addTransaction(tx);

@@ -76,4 +76,27 @@ module.exports = {
 
         res.status(200).json({ transactionCount });
     },
+    addBalance: (req, res) => {
+        const { amount } = req.body;
+        const { publicKey: userWalletAddress } = req.user;
+
+        if (!amount || amount <= 0) {
+            return res.status(400).json({
+                err: true,
+                message:
+                    'Amount is invalid!(Either not exists or smaller than 0)',
+            });
+        }
+
+        const tx = new Transaction('system', userWalletAddress, amount);
+        myChain.addTransaction(tx);
+        myChain.minePendingTransactions(minerWalletAddress);
+
+        const newBalance = myChain.getBalanceOfAddress(userWalletAddress);
+
+        res.status(200).json({
+            message: `you successfully added ${amount}$ to your account`,
+            balance: newBalance,
+        });
+    },
 };

@@ -7,6 +7,7 @@ const {
     checkChainValidity,
     getBlockCount,
     getTransactionCount,
+    addBalance,
 } = require('./blockchain.service');
 const checkAuthToken = require('../../auth/auth');
 
@@ -17,5 +18,6 @@ router.get('/getChainValidity', checkAuthToken, checkChainValidity);
 router.get('/getBlockCount', checkAuthToken, getBlockCount);
 router.get('/getTransactionCount', checkAuthToken, getTransactionCount);
 router.post('/sendMoney', checkAuthToken, sendMoney);
+router.post('/addBalance', checkAuthToken, addBalance);
 
 module.exports = router;

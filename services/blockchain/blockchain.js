@@ -180,17 +180,19 @@ class Blockchain {
         );
         this.pendingTransactions.push(rewardTx);
 
-        const block = new Block(
-            Date.now(),
-            this.pendingTransactions,
-            this.getLatestBlock().hash
-        );
-        block.mineBlock(this.difficulty);
+        if (this.pendingTransactions.length >= 4) {
+            const block = new Block(
+                Date.now(),
+                this.pendingTransactions,
+                this.getLatestBlock().hash
+            );
+            block.mineBlock(this.difficulty);
 
-        debug('Block successfully mined!');
-        this.chain.push(block);
+            debug('Block successfully mined!');
+            this.chain.push(block);
 
-        this.pendingTransactions = [];
+            this.pendingTransactions = [];
+        }
     }
 
     /**

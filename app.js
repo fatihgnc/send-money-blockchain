@@ -5,21 +5,21 @@ const { registerWsdl } = require('./services/user/user.service');
 const soap = require('soap');
 const fs = require('fs');
 require('dotenv').config();
-
+console.log();
 mongoose.connect(process.env.MONGODB_URL, (err) => {
-    if (err) return console.error(err);
-    console.log('Connected to Mongo DB!');
+  if (err) return console.error(err);
+  console.log('Connected to Mongo DB!');
 });
 
 const serviceObject = {
-    registerService: {
-        registerServiceSoapPort: {
-            register: registerWsdl,
-        },
-        registerServiceSoap12Port: {
-            register: registerWsdl,
-        },
+  registerService: {
+    registerServiceSoapPort: {
+      register: registerWsdl,
     },
+    registerServiceSoap12Port: {
+      register: registerWsdl,
+    },
+  },
 };
 
 var wsdlService = fs.readFileSync('service.wsdl', 'utf8');
@@ -45,10 +45,10 @@ app.listen(PORT, () => console.log('Express server is up on port: ' + PORT));
 var serverWsdl = app.listen(8000);
 var wsdl_path = '/wsdl';
 soap.listen(serverWsdl, wsdl_path, serviceObject, wsdlService, (err, res) => {
-    if (err) return console.log(err);
-    console.log(
-        'Soap server is up on PORT: 8000\n Check\n http://localhost:8000' +
-            wsdl_path +
-            '?wsdl\n to see if the service is working'
-    );
+  if (err) return console.log(err);
+  console.log(
+    'Soap server is up on PORT: 8000\n Check\n http://localhost:8000' +
+      wsdl_path +
+      '?wsdl\n to see if the service is working'
+  );
 });
